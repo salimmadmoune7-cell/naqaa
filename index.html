@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naqaa - Naturally Clean | Dentifrice Miswak Naturel</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap');
+        body { font-family: 'DM Sans', sans-serif; }
+
+        .hero-content h1 { font-family: 'Cormorant Garamond', serif; }
+        .hero-content h2 { font-family: 'DM Sans', sans-serif; }
+
+        /* Products grid on homepage */
+        .products-home {
+            padding: 80px 5%;
+            background: #FAF7F2;
+        }
+        .products-home h2 {
+            font-family: 'Cormorant Garamond', serif;
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2C3E2F;
+            margin-bottom: 50px;
+        }
+        .products-home-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+        .home-product-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        .home-product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+        .home-product-card .badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #5D8C5F;
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .home-product-card .badge.new { background: #5a8dc0; }
+        .home-product-card .badge.pack { background: #C0955A; }
+        .home-product-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        .home-product-card .card-info {
+            padding: 20px;
+        }
+        .home-product-card h3 {
+            font-size: 1.2rem;
+            color: #2C3E2F;
+            margin-bottom: 6px;
+        }
+        .home-product-card .price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #5D8C5F;
+            margin-bottom: 14px;
+        }
+        .home-product-card a {
+            display: block;
+            background: #9BBE9C;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .home-product-card a:hover { background: #5D8C5F; }
+
+        .view-all-center { text-align: center; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo"><img src="1.png" alt="Naqaa Logo"></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="boutique.html">Boutique</a></li>
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="admin-login.html" class="admin-link">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Naqaa</h1>
+            <h2>Naturally Clean</h2>
+            <p class="tagline">Le pouvoir ancestral du Miswak pour un sourire naturellement éclatant</p>
+            <a href="boutique.html" class="btn-primary">Découvrir nos produits</a>
+        </div>
+        <div class="hero-image">
+            <img src="brosse.png" alt="Kit Dentaire Naqaa">
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits">
+        <h2>Pourquoi choisir Naqaa ?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="icon">🌿</div>
+                <h3>100% Naturel</h3>
+                <p>Formule à base d'ingrédients naturels, sans produits chimiques agressifs</p>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">✨</div>
+                <h3>Efficacité Prouvée</h3>
+                <p>Le Miswak utilisé depuis des millénaires pour l'hygiène bucco-dentaire</p>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">💚</div>
+                <h3>Écologique</h3>
+                <p>Emballage recyclable et formule respectueuse de l'environnement</p>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">🦷</div>
+                <h3>Santé Dentaire</h3>
+                <p>Propriétés antibactériennes et reminéralisantes naturelles</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Home -->
+    <section class="products-home">
+        <h2>Notre Gamme Complète</h2>
+        <div class="products-home-grid">
+            <div class="home-product-card">
+                <span class="badge">Bestseller</span>
+                <img src="kit.png" alt="Kit Dentaire">
+                <div class="card-info">
+                    <h3>Kit Dentaire Naqaa</h3>
+                    <div class="price">1800 DA</div>
+                    <a href="commande.html?product=kit">Commander</a>
+                </div>
+            </div>
+            <div class="home-product-card">
+                <span class="badge new">Nouveau</span>
+                <img src="Fil.PNG" alt="Fil Dentaire">
+                <div class="card-info">
+                    <h3>Fil Dentaire Rechargeable</h3>
+                    <div class="price">400 DA</div>
+                    <a href="commande.html?product=fil">Commander</a>
+                </div>
+            </div>
+            <div class="home-product-card">
+                <span class="badge new">Nouveau</span>
+                <img src="Huilles.jpeg" alt="Spray Buccal">
+                <div class="card-info">
+                    <h3>Spray Buccal Naqaa</h3>
+                    <div class="price">500 DA</div>
+                    <a href="commande.html?product=spray">Commander</a>
+                </div>
+            </div>
+            <div class="home-product-card">
+                <span class="badge pack">Pack</span>
+                <img src="vert.jpeg" alt="Pack Complet">
+                <div class="card-info">
+                    <h3>Pack Complet Naqaa</h3>
+                    <div class="price">2500 DA</div>
+                    <a href="commande.html?product=pack">Commander</a>
+                </div>
+            </div>
+        </div>
+        <div class="view-all-center">
+            <a href="boutique.html" class="btn-secondary">Voir tous les détails →</a>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>Notre Mission</h2>
+            <p>Chez Naqaa, nous croyons en la puissance de la nature pour prendre soin de votre sourire. Notre gamme au Miswak combine tradition ancestrale et formulation moderne pour vous offrir une hygiène bucco-dentaire naturellement saine et éclatante.</p>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section"><h3>Naqaa</h3><p>Naturally Clean</p></div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: Naqaa@annaba.dz</p>
+                <p>Tél: +213 07 88 31 27 83</p>
+            </div>
+            <div class="footer-section">
+                <h4>Suivez-nous</h4>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/naqaa.natural?igsh=b3JldDk3dGt3cW1y&utm_source=qr">Instagram</a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">© 2026 Naqaa. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

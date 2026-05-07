@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commander - Naqaa</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .product-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        .product-image {
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .product-image:hover { transform: scale(1.05); }
+        .color-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        .color-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .color-option:hover { border-color: #7fb069; transform: translateY(-2px); }
+        .color-preview { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #ddd; }
+        .color-beige { background: #d9c5a1; }
+        .color-green { background: #a8c5a0; }
+        .radio-group { display: flex; gap: 1rem; margin-top: 0.5rem; }
+        .radio-option {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .radio-option:hover { border-color: #7fb069; background: #f0f7f0; }
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading-spinner {
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #7fb069;
+        }
+        @media (max-width: 768px) {
+            .product-showcase { grid-template-columns: 1fr; }
+            .color-options, .radio-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display:flex; display:none;">
+        <div class="loading-spinner">🌿 Envoi de votre commande...</div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo"><img src="1.png" alt="Naqaa Logo"></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="boutique.html">Boutique</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Order Form -->
+    <section class="order-form-section">
+        <div class="container-form">
+            <h1>Finaliser votre commande</h1>
+            
+            <div class="product-showcase">
+                <img src="vert.jpeg" alt="Kit Dentaire Vert" class="product-image">
+                <img src="beige.png" alt="Kit Dentaire Beige" class="product-image">
+            </div>
+            
+            <form id="orderForm" onsubmit="submitOrder(event)">
+                <!-- Personal Information -->
+                <div class="form-group">
+                    <h3>Informations personnelles</h3>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="nom">Nom complet *</label>
+                            <input type="text" id="nom" name="nom" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="tel">Téléphone *</label>
+                            <input type="tel" id="tel" name="tel" required>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                </div>
+
+                <!-- Product Options -->
+                <div class="form-group">
+                    <h3>Options du produit</h3>
+                    <div class="form-field">
+                        <label>Choisissez la couleur *</label>
+                        <div class="color-options">
+                            <div class="color-option">
+                                <input type="radio" id="beige" name="couleur" value="Beige" checked>
+                                <div class="color-preview color-beige"></div>
+                                <label for="beige">Beige</label>
+                            </div>
+                            <div class="color-option">
+                                <input type="radio" id="vert" name="couleur" value="Vert">
+                                <div class="color-preview color-green"></div>
+                                <label for="vert">Vert</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label for="quantite">Quantité *</label>
+                        <input type="number" id="quantite" name="quantite" value="1" min="1" required onchange="updateTotal()">
+                    </div>
+                </div>
+
+                <!-- Delivery Information -->
+                <div class="form-group">
+                    <h3>Informations de livraison</h3>
+                    <div class="form-field">
+                        <label>Type de livraison *</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="domicile" name="type_livraison" value="Domicile" checked onchange="updateDeliveryFee()">
+                                <label for="domicile">🏠 À domicile (500 DA)</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="bureau" name="type_livraison" value="Bureau" onchange="updateDeliveryFee()">
+                                <label for="bureau">🏢 Au bureau (350 DA)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="wilaya">Wilaya *</label>
+                        <select id="wilaya" name="wilaya" required>
+                            <option value="">Sélectionner une wilaya</option>
+                            <option>Adrar</option><option>Chlef</option><option>Laghouat</option>
+                            <option>Oum El Bouaghi</option><option>Batna</option><option>Béjaïa</option>
+                            <option>Biskra</option><option>Béchar</option><option>Blida</option>
+                            <option>Bouira</option><option>Tamanrasset</option><option>Tébessa</option>
+                            <option>Tlemcen</option><option>Tiaret</option><option>Tizi Ouzou</option>
+                            <option>Alger</option><option>Djelfa</option><option>Jijel</option>
+                            <option>Sétif</option><option>Saïda</option><option>Skikda</option>
+                            <option>Sidi Bel Abbès</option><option>Annaba</option><option>Guelma</option>
+                            <option>Constantine</option><option>Médéa</option><option>Mostaganem</option>
+                            <option>M'Sila</option><option>Mascara</option><option>Ouargla</option>
+                            <option>Oran</option><option>El Bayadh</option><option>Illizi</option>
+                            <option>Bordj Bou Arréridj</option><option>Boumerdès</option><option>El Tarf</option>
+                            <option>Tindouf</option><option>Tissemsilt</option><option>El Oued</option>
+                            <option>Khenchela</option><option>Souk Ahras</option><option>Tipaza</option>
+                            <option>Mila</option><option>Aïn Defla</option><option>Naâma</option>
+                            <option>Aïn Témouchent</option><option>Ghardaïa</option><option>Relizane</option>
+                            <option>Timimoun</option><option>Bordj Badji Mokhtar</option><option>Ouled Djellal</option>
+                            <option>Béni Abbès</option><option>In Salah</option><option>In Guezzam</option>
+                            <option>Touggourt</option><option>Djanet</option><option>El M'Ghair</option><option>El Menia</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="commune">Commune *</label>
+                        <input type="text" id="commune" name="commune" required>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="adresse">Adresse complète *</label>
+                        <textarea id="adresse" name="adresse" rows="3" required></textarea>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="form-group">
+                    <h3>Mode de paiement</h3>
+                    <div class="form-field">
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="mainPropre" name="paiement" value="À la main" checked>
+                                <label for="mainPropre">💵 Paiement à la livraison</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="carte" name="paiement" value="Carte magnétique">
+                                <label for="carte">💳 Carte magnétique</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="form-group">
+                    <h3>Détails de la commande</h3>
+                    <div class="order-summary">
+                        <div class="summary-line">
+                            <span>Kit Dentaire Naqaa</span>
+                            <span>1800 DA</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>Quantité</span>
+                            <span id="qtyDisplay">1</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>Livraison</span>
+                            <span id="deliveryFee">500 DA</span>
+                        </div>
+                        <div class="summary-line total">
+                            <strong>Total</strong>
+                            <strong id="totalPrice">2300 DA</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="form-group">
+                    <h3>Notes (optionnel)</h3>
+                    <div class="form-field">
+                        <textarea id="notes" name="notes" rows="3" placeholder="Informations supplémentaires..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary btn-large">Confirmer la commande</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="success-icon">✓</div>
+            <h2>Commande confirmée !</h2>
+            <p>Merci pour votre commande. Nous vous contacterons sous peu pour la confirmation.</p>
+            <p><strong>Numéro de commande : <span id="orderNumber"></span></strong></p>
+            <button onclick="closeModal()" class="btn-primary">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section"><h3>Naqaa</h3><p>Naturally Clean</p></div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: Naqaa@annaba.dz</p>
+                <p>Tél: +213 07 88 31 27 83</p>
+            </div>
+            <div class="footer-section">
+                <h4>Suivez-nous</h4>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/naqaa.natural?igsh=b3JldDk3dGt3cW1y&utm_source=qr">Instagram</a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">© 2026 Naqaa. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module">
+        // ============================================
+        // CONFIG SUPABASE
+        // ============================================
+        const SUPABASE_URL = 'https://qruwcmqhlslxueoelffr.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_64JA6cYECHd1Jz1ClBdN0A_qU8ofVyI';
+
+        async function supabaseInsert(table, data) {
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': SUPABASE_ANON_KEY,
+                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(data)
+            });
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.message || 'Erreur Supabase');
+            }
+            return res.json();
+        }
+
+        async function supabaseRpc(fn, params) {
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': SUPABASE_ANON_KEY,
+                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                },
+                body: JSON.stringify(params)
+            });
+            return res.ok;
+        }
+
+        // ============================================
+        // CALCUL TOTAUX
+        // ============================================
+        window.updateDeliveryFee = function() {
+            const domicile = document.getElementById('domicile').checked;
+            document.getElementById('deliveryFee').textContent = (domicile ? 500 : 350) + ' DA';
+            window.updateTotal();
+        };
+
+        window.updateTotal = function() {
+            const qty = parseInt(document.getElementById('quantite').value) || 1;
+            const domicile = document.getElementById('domicile').checked;
+            const livraison = domicile ? 500 : 350;
+            const total = (1800 * qty) + livraison;
+            document.getElementById('qtyDisplay').textContent = qty;
+            document.getElementById('totalPrice').textContent = total + ' DA';
+        };
+
+        // ============================================
+        // SOUMISSION COMMANDE
+        // ============================================
+        window.submitOrder = async function(event) {
+            event.preventDefault();
+
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.style.display = 'flex';
+
+            try {
+                const qty = parseInt(document.getElementById('quantite').value);
+                const domicile = document.getElementById('domicile').checked;
+                const livraison = domicile ? 500 : 350;
+                const total = (1800 * qty) + livraison;
+                const orderNumber = 'NQA' + Date.now().toString().slice(-8);
+
+                const orderData = {
+                    order_number: orderNumber,
+                    nom: document.getElementById('nom').value.trim(),
+                    tel: document.getElementById('tel').value.trim(),
+                    email: document.getElementById('email').value.trim() || null,
+                    produit: 'Kit Dentaire Naqaa',
+                    couleur: document.querySelector('input[name="couleur"]:checked').value,
+                    wilaya: document.getElementById('wilaya').value,
+                    commune: document.getElementById('commune').value.trim(),
+                    adresse: document.getElementById('adresse').value.trim(),
+                    type_livraison: document.querySelector('input[name="type_livraison"]:checked').value,
+                    paiement: document.querySelector('input[name="paiement"]:checked').value,
+                    quantite: qty,
+                    total: total + ' DA',
+                    notes: document.getElementById('notes').value.trim() || null,
+                    status: 'En attente'
+                };
+
+                await supabaseInsert('orders', orderData);
+
+                // Décrémenter le stock
+                await supabaseRpc('decrement_stock', { qty: qty });
+
+                overlay.style.display = 'none';
+                document.getElementById('orderNumber').textContent = orderNumber;
+                document.getElementById('successModal').style.display = 'block';
+                document.getElementById('orderForm').reset();
+                window.updateTotal();
+
+            } catch (err) {
+                overlay.style.display = 'none';
+                alert('❌ Erreur lors de l\'envoi: ' + err.message + '\nVérifiez votre connexion et réessayez.');
+                console.error(err);
+            }
+        };
+
+        window.closeModal = function() {
+            document.getElementById('successModal').style.display = 'none';
+            window.location.href = 'index.html';
+        };
+
+        // Init
+        window.updateTotal();
+    </script>
+</body>
+</html>

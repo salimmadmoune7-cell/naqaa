@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Naqaa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="admin-login-page">
+        <div class="login-container">
+            <h1>Connexion Admin</h1>
+            <form id="loginForm" onsubmit="adminLogin(event)">
+                <div class="form-field">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-field">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn-primary">Se connecter</button>
+                <p id="errorMsg" class="error-msg"></p>
+            </form>
+            <a href="index.html" class="back-link">← Retour au site</a>
+        </div>
+    </div>
+
+    <script>
+        function adminLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple authentication (in production, use proper backend authentication)
+            if (username === 'admin' && password === 'naqaa2026') {
+                localStorage.setItem('isAdminLoggedIn', 'true');
+                window.location.href = 'admin.html';
+            } else {
+                document.getElementById('errorMsg').textContent = 'Identifiants incorrects';
+            }
+        }
+    </script>
+</body>
+</html>
