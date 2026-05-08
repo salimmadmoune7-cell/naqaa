@@ -1,689 +1,869 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boutique - Naqaa</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        :root {
-            --sage: #9BBE9C;
-            --sage-dark: #5D8C5F;
-            --sage-light: #D4E7D5;
-            --cream: #FAF7F2;
-            --text: #2C3E2F;
-        }
+<title>Boutique - Naqaa</title>
 
-        body { font-family: 'DM Sans', sans-serif; background: var(--cream); }
+<link rel="stylesheet" href="style.css">
 
-        /* ---- SHOP HERO ---- */
-        .shop-hero {
-            background: linear-gradient(135deg, #D4E7D5 0%, #EAF3EA 60%, #FAF7F2 100%);
-            padding: 60px 5% 40px;
-            text-align: center;
-        }
-        .shop-hero h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3rem;
-            color: var(--text);
-            margin-bottom: 10px;
-        }
-        .shop-hero p { color: #6B7B6D; font-size: 1.1rem; }
+<style>
 
-        /* ---- PRODUCTS GRID ---- */
-        .products-section {
-            padding: 60px 5%;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-        .products-section h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.2rem;
-            color: var(--text);
-            margin-bottom: 40px;
-            text-align: center;
-        }
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap');
 
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-bottom: 80px;
-        }
+:root{
+    --sage:#9BBE9C;
+    --sage-dark:#5D8C5F;
+    --sage-light:#D4E7D5;
+    --cream:#FAF7F2;
+    --text:#2C3E2F;
+    --gold:#C0955A;
+}
 
-        .product-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-        }
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-        }
-        .product-card .badge {
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            background: var(--sage-dark);
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 20px;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            z-index: 2;
-        }
-        .product-card .badge.pack { background: #C0955A; }
-        .product-card .badge.new { background: #5a8dc0; }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .card-image {
-            height: 260px;
-            overflow: hidden;
-            background: #f0f5f0;
-        }
-        .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        .product-card:hover .card-image img { transform: scale(1.05); }
+body{
+    font-family:'DM Sans',sans-serif;
+    background:var(--cream);
+    color:var(--text);
+}
 
-        .card-body {
-            padding: 24px;
-        }
-        .card-body h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
-            color: var(--text);
-            margin-bottom: 6px;
-        }
-        .card-body .tagline {
-            color: #6B7B6D;
-            font-size: 0.9rem;
-            margin-bottom: 14px;
-        }
-        .card-body .price-tag {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--sage-dark);
-            margin-bottom: 16px;
-        }
-        .card-body .mini-features {
-            list-style: none;
-            margin-bottom: 20px;
-        }
-        .card-body .mini-features li {
-            padding: 4px 0;
-            color: #555;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .card-body .mini-features li::before {
-            content: '✓';
-            color: var(--sage-dark);
-            font-weight: 700;
-        }
+/* ── HERO ── */
 
-        .card-actions {
-            display: flex;
-            gap: 10px;
-        }
-        .card-actions .btn-detail {
-            flex: 1;
-            padding: 12px;
-            background: transparent;
-            border: 2px solid var(--sage);
-            color: var(--sage-dark);
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-        .card-actions .btn-detail:hover {
-            background: var(--sage-light);
-        }
-        .card-actions .btn-order {
-            flex: 1;
-            padding: 12px;
-            background: var(--sage);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-        .card-actions .btn-order:hover {
-            background: var(--sage-dark);
-        }
+.shop-hero{
+    background:linear-gradient(135deg,#D4E7D5 0%,#EAF3EA 60%,#FAF7F2 100%);
+    padding:70px 5%;
+    text-align:center;
+}
 
-        /* ---- PACK HERO ---- */
-        .pack-hero {
-            background: linear-gradient(135deg, #2C3E2F 0%, #3d5440 100%);
-            border-radius: 24px;
-            padding: 50px 40px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-            margin-bottom: 60px;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        .pack-hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(155,190,156,0.15) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .pack-hero h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.4rem;
-            margin-bottom: 10px;
-        }
-        .pack-hero .pack-price {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #a8d4a9;
-            margin: 12px 0;
-        }
-        .pack-hero .pack-saving {
-            background: #C0955A;
-            display: inline-block;
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-        .pack-hero p { color: rgba(255,255,255,0.8); margin-bottom: 20px; line-height: 1.7; }
-        .pack-hero ul { list-style: none; margin-bottom: 28px; }
-        .pack-hero ul li { padding: 5px 0; color: rgba(255,255,255,0.9); }
-        .pack-hero ul li::before { content: '✦ '; color: #a8d4a9; }
-        .pack-hero .btn-pack {
-            display: inline-block;
-            background: #a8d4a9;
-            color: #2C3E2F;
-            padding: 15px 35px;
-            border-radius: 12px;
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 1.05rem;
-            transition: all 0.3s;
-        }
-        .pack-hero .btn-pack:hover {
-            background: white;
-            transform: translateY(-2px);
-        }
-        .pack-images {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .pack-images img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 2px solid rgba(255,255,255,0.1);
-        }
-        .pack-images img:first-child {
-            grid-column: span 2;
-            height: 200px;
-        }
+.shop-hero h1{
+    font-size:3rem;
+    margin-bottom:10px;
+    font-family:'Cormorant Garamond',serif;
+}
 
-        /* ---- AI ASSISTANT ---- */
-        .ai-assistant-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 62px;
-            height: 62px;
-            background: linear-gradient(135deg, var(--sage) 0%, var(--sage-dark) 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 1.6rem;
-            cursor: pointer;
-            box-shadow: 0 6px 25px rgba(93,140,95,0.4);
-            z-index: 999;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .ai-assistant-btn:hover { transform: scale(1.1); }
-        .ai-assistant-btn .pulse {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            width: 16px;
-            height: 16px;
-            background: #C0955A;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
+.shop-hero p{
+    color:#666;
+}
 
-        .ai-chat-panel {
-            position: fixed;
-            bottom: 110px;
-            right: 30px;
-            width: 370px;
-            max-height: 520px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            z-index: 998;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .ai-chat-panel.open { display: flex; }
+/* ── PRODUCTS ── */
 
-        .chat-header {
-            background: linear-gradient(135deg, var(--sage), var(--sage-dark));
-            color: white;
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .chat-header .avatar {
-            width: 38px;
-            height: 38px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-        .chat-header .info h4 { margin: 0; font-size: 0.95rem; }
-        .chat-header .info p { margin: 0; font-size: 0.78rem; opacity: 0.8; }
-        .chat-header .close-chat {
-            margin-left: auto;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.3rem;
-            cursor: pointer;
-            opacity: 0.8;
-        }
-        .chat-header .close-chat:hover { opacity: 1; }
+.products-section{
+    padding:60px 5%;
+    max-width:1300px;
+    margin:auto;
+}
 
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            min-height: 250px;
-        }
-        .msg {
-            max-width: 85%;
-            padding: 10px 14px;
-            border-radius: 14px;
-            font-size: 0.88rem;
-            line-height: 1.5;
-        }
-        .msg.bot {
-            background: #f0f5f0;
-            color: var(--text);
-            border-bottom-left-radius: 4px;
-            align-self: flex-start;
-        }
-        .msg.user {
-            background: var(--sage);
-            color: white;
-            border-bottom-right-radius: 4px;
-            align-self: flex-end;
-        }
-        .msg.loading { opacity: 0.6; font-style: italic; }
+.products-section > h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2.2rem;
+    color:var(--text);
+    margin-bottom:40px;
+    text-align:center;
+}
 
-        .quick-replies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            padding: 0 16px 12px;
-        }
-        .quick-reply {
-            background: var(--sage-light);
-            color: var(--sage-dark);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
-        .quick-reply:hover {
-            background: var(--sage);
-            color: white;
-        }
+/* ── PACK HERO ── */
 
-        .chat-input-row {
-            display: flex;
-            gap: 8px;
-            padding: 12px 16px;
-            border-top: 1px solid #f0f0f0;
-        }
-        .chat-input-row input {
-            flex: 1;
-            padding: 10px 14px;
-            border: 2px solid #e8e8e8;
-            border-radius: 10px;
-            font-size: 0.88rem;
-            outline: none;
-            transition: border 0.2s;
-        }
-        .chat-input-row input:focus { border-color: var(--sage); }
-        .chat-input-row button {
-            background: var(--sage);
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.2s;
-        }
-        .chat-input-row button:hover { background: var(--sage-dark); }
+.pack-hero{
+    background:linear-gradient(135deg,#2C3E2F 0%,#3d5440 100%);
+    border-radius:24px;
+    padding:50px 40px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+    margin-bottom:60px;
+    color:white;
+    position:relative;
+    overflow:hidden;
+}
 
-        @media (max-width: 768px) {
-            .pack-hero { grid-template-columns: 1fr; }
-            .pack-images { display: none; }
-            .ai-chat-panel { width: calc(100vw - 30px); right: 15px; }
-        }
-    </style>
+.pack-hero::before{
+    content:'';
+    position:absolute;
+    top:-50%;
+    right:-10%;
+    width:400px;
+    height:400px;
+    background:radial-gradient(circle,rgba(155,190,156,0.15) 0%,transparent 70%);
+    border-radius:50%;
+}
+
+.pack-hero h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2.4rem;
+    margin-bottom:10px;
+}
+
+.pack-hero .pack-price{
+    font-size:2.8rem;
+    font-weight:700;
+    color:#a8d4a9;
+    margin:12px 0;
+}
+
+.pack-hero .pack-saving{
+    background:var(--gold);
+    display:inline-block;
+    padding:4px 16px;
+    border-radius:20px;
+    font-size:0.85rem;
+    font-weight:600;
+    margin-bottom:16px;
+}
+
+.pack-hero p{
+    color:rgba(255,255,255,0.8);
+    margin-bottom:20px;
+    line-height:1.7;
+}
+
+.pack-hero ul{
+    list-style:none;
+    margin-bottom:28px;
+}
+
+.pack-hero ul li{
+    padding:5px 0;
+    color:rgba(255,255,255,0.9);
+}
+
+.pack-hero ul li::before{
+    content:'✦ ';
+    color:#a8d4a9;
+}
+
+.pack-hero .btn-pack{
+    display:inline-block;
+    background:#a8d4a9;
+    color:#2C3E2F;
+    padding:15px 35px;
+    border-radius:12px;
+    font-weight:700;
+    text-decoration:none;
+    font-size:1.05rem;
+    transition:all 0.3s;
+}
+
+.pack-hero .btn-pack:hover{
+    background:white;
+    transform:translateY(-2px);
+}
+
+.pack-images{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.pack-images img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    border-radius:12px;
+    border:2px solid rgba(255,255,255,0.1);
+}
+
+.pack-images img:first-child{
+    grid-column:span 2;
+    height:200px;
+}
+
+/* ── PRODUCTS GRID ── */
+
+.products-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+    margin-bottom:80px;
+}
+
+.product-card{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 4px 20px rgba(0,0,0,0.07);
+    transition:transform 0.3s,box-shadow 0.3s;
+    position:relative;
+}
+
+.product-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 12px 40px rgba(0,0,0,0.12);
+}
+
+.product-card .badge{
+    position:absolute;
+    top:16px;
+    left:16px;
+    background:var(--sage-dark);
+    color:white;
+    font-size:0.75rem;
+    font-weight:600;
+    padding:4px 12px;
+    border-radius:20px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    z-index:2;
+}
+
+.product-card .badge.new{
+    background:#5a8dc0;
+}
+
+.card-image{
+    height:260px;
+    overflow:hidden;
+    background:#f0f5f0;
+}
+
+.card-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform 0.5s;
+}
+
+.product-card:hover .card-image img{
+    transform:scale(1.05);
+}
+
+.card-body{
+    padding:24px;
+}
+
+.card-body h3{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.6rem;
+    color:var(--text);
+    margin-bottom:6px;
+}
+
+.card-body .tagline{
+    color:#6B7B6D;
+    font-size:0.9rem;
+    margin-bottom:14px;
+}
+
+.card-body .price-tag{
+    font-size:1.6rem;
+    font-weight:700;
+    color:var(--sage-dark);
+    margin-bottom:16px;
+}
+
+.mini-features{
+    list-style:none;
+    margin-bottom:20px;
+}
+
+.mini-features li{
+    padding:4px 0;
+    color:#555;
+    font-size:0.9rem;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.mini-features li::before{
+    content:'✓';
+    color:var(--sage-dark);
+    font-weight:700;
+}
+
+.card-actions{
+    display:flex;
+    gap:10px;
+}
+
+.btn-detail,
+.btn-order{
+    flex:1;
+    text-align:center;
+    padding:12px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.3s;
+    font-size:0.9rem;
+    display:block;
+}
+
+.btn-detail{
+    border:2px solid var(--sage);
+    color:var(--sage-dark);
+    background:transparent;
+}
+
+.btn-detail:hover{
+    background:var(--sage-light);
+}
+
+.btn-order{
+    background:var(--sage);
+    color:white;
+    border:none;
+}
+
+.btn-order:hover{
+    background:var(--sage-dark);
+}
+
+/* ── CHAT BUTTON ── */
+
+.ai-assistant-btn{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    width:65px;
+    height:65px;
+    border:none;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--sage),var(--sage-dark));
+    color:white;
+    font-size:1.6rem;
+    cursor:pointer;
+    z-index:99999;
+    box-shadow:0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* ── CHAT PANEL ── */
+
+.ai-chat-panel{
+    position:fixed;
+    bottom:100px;
+    right:25px;
+    width:370px;
+    height:550px;
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    display:none;
+    flex-direction:column;
+    z-index:99999;
+    box-shadow:0 20px 50px rgba(0,0,0,0.15);
+}
+
+.ai-chat-panel.open{
+    display:flex;
+}
+
+.chat-header{
+    background:linear-gradient(135deg,var(--sage),var(--sage-dark));
+    color:white;
+    padding:16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.chat-header h4{
+    margin-bottom:4px;
+}
+
+.close-chat{
+    background:none;
+    border:none;
+    color:white;
+    font-size:1.2rem;
+    cursor:pointer;
+}
+
+.chat-messages{
+    flex:1;
+    overflow-y:auto;
+    padding:15px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    background:#fafafa;
+}
+
+.msg{
+    padding:12px 14px;
+    border-radius:14px;
+    max-width:85%;
+    line-height:1.5;
+    font-size:0.92rem;
+}
+
+.msg.user{
+    background:var(--sage);
+    color:white;
+    align-self:flex-end;
+}
+
+.msg.bot{
+    background:#eef5ee;
+    color:#333;
+    align-self:flex-start;
+}
+
+.quick-replies{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    padding:12px;
+}
+
+.quick-reply{
+    border:none;
+    background:var(--sage-light);
+    padding:8px 12px;
+    border-radius:20px;
+    cursor:pointer;
+    color:var(--sage-dark);
+    font-size:0.8rem;
+    transition:all 0.2s;
+    font-weight:500;
+}
+
+.quick-reply:hover{
+    background:var(--sage);
+    color:white;
+}
+
+.chat-input-row{
+    display:flex;
+    gap:10px;
+    padding:15px;
+    border-top:1px solid #eee;
+    background:white;
+}
+
+.chat-input-row input{
+    flex:1;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    outline:none;
+}
+
+.chat-input-row button{
+    border:none;
+    background:var(--sage);
+    color:white;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.msg form{
+    margin-top:10px;
+}
+
+.msg form input,
+.msg form select{
+    width:100%;
+    padding:10px;
+    margin-bottom:8px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+.msg form button{
+    width:100%;
+    padding:12px;
+    background:#5D8C5F;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* ── MOBILE ── */
+
+@media(max-width:768px){
+    .pack-hero{ grid-template-columns:1fr; padding:35px 24px; }
+    .pack-images{ display:none; }
+    .ai-chat-panel{ width:calc(100vw - 30px); right:15px; }
+    .shop-hero h1{ font-size:2.2rem; }
+}
+
+</style>
 </head>
+
 <body>
-    <!-- Header -->
-    <header>
-        <nav class="navbar">
-            <div class="logo"><img src="1.png" alt="Naqaa Logo"></div>
-            <ul class="nav-links">
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="boutique.html" class="active">Boutique</a></li>
-                <li><a href="index.html#about">À propos</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
+
+<!-- NAVBAR -->
+<header>
+    <nav class="navbar">
+        <div class="logo"><img src="1.png" alt="Naqaa Logo"></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="boutique.html" class="active">Boutique</a></li>
+            <li><a href="index.html#about">À propos</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- HERO -->
+
+<div class="shop-hero">
+    <h1>Notre Boutique</h1>
+    <p>Découvrez les produits naturels Naqaa 🌿</p>
+</div>
+
+<!-- PRODUCTS -->
+
+<div class="products-section">
+
+    <!-- PACK COMPLET -->
+    <div class="pack-hero">
+        <div>
+            <h2>🌿 Pack Complet Naqaa</h2>
+            <div class="pack-price">2500 DA</div>
+            <span class="pack-saving">Économisez 200 DA</span>
+            <p>Notre offre la plus complète : tout ce dont vous avez besoin pour une routine dentaire 100% naturelle.</p>
+            <ul>
+                <li>Kit Dentaire Naqaa (brosse + boîte)</li>
+                <li>Fil Dentaire Rechargeable Naqaa</li>
+                <li>Spray Buccal Naqaa</li>
+                <li>Livraison prioritaire incluse</li>
             </ul>
-        </nav>
-    </header>
-
-    <!-- Hero -->
-    <div class="shop-hero">
-        <h1>Notre Boutique</h1>
-        <p>Hygiène bucco-dentaire naturelle — inspirée du Miswak, formulée pour aujourd'hui</p>
+            <a href="commande.html?product=pack" class="btn-pack">Commander le Pack</a>
+        </div>
+        <div class="pack-images">
+            <img src="vert.jpeg" alt="Kit Naqaa">
+            <img src="Fil.PNG" alt="Fil dentaire">
+            <img src="Huilles.jpeg" alt="Spray">
+        </div>
     </div>
 
-    <div class="products-section">
+    <!-- PRODUITS INDIVIDUELS -->
+    <h2>Produits Individuels</h2>
+    <div class="products-grid">
 
-        <!-- PACK PROMO -->
-        <div class="pack-hero">
-            <div>
-                <h2>🌿 Pack Complet Naqaa</h2>
-                <div class="pack-price">2500 DA</div>
-                <span class="pack-saving">Économisez 200 DA</span>
-                <p>Notre offre la plus complète : tout ce dont vous avez besoin pour une routine dentaire 100% naturelle.</p>
-                <ul>
-                    <li>Kit Dentaire Naqaa (brosse + boîte)</li>
-                    <li>Fil Dentaire Rechargeable Naqaa</li>
-                    <li>Spray Buccal Naqaa</li>
-                    <li>Livraison prioritaire incluse</li>
+        <!-- KIT -->
+        <div class="product-card">
+            <span class="badge">Bestseller</span>
+            <div class="card-image">
+                <img src="vert.jpeg" alt="Kit Dentaire Naqaa">
+            </div>
+            <div class="card-body">
+                <h3>Kit Dentaire Naqaa</h3>
+                <p class="tagline">Brosse pliable + Boîte Miswak</p>
+                <div class="price-tag">1800 DA</div>
+                <ul class="mini-features">
+                    <li>Brosse naturelle</li>
+                    <li>Huiles essentielles bio</li>
+                    <li>Disponible Vert & Beige</li>
                 </ul>
-                <a href="commande.html?product=pack" class="btn-pack">Commander le Pack</a>
-            </div>
-            <div class="pack-images">
-                <img src="vert.jpeg" alt="Kit Naqaa">
-                <img src="blue.png" alt="Fil dentaire">
-                <img src="beige.png" alt="Spray">
+                <div class="card-actions">
+                    <a href="boutique-detail.html" class="btn-detail">Détails</a>
+                    <a href="commande.html?product=kit" class="btn-order">Commander</a>
+                </div>
             </div>
         </div>
 
-        <!-- PRODUITS INDIVIDUELS -->
-        <h2>Produits Individuels</h2>
-        <div class="products-grid">
-
-            <!-- Produit 1 : Kit Dentaire -->
-            <div class="product-card">
-                <span class="badge">Bestseller</span>
-                <div class="card-image">
-                    <img src="vert.jpeg" alt="Kit Dentaire Naqaa">
-                </div>
-                <div class="card-body">
-                    <h3>Kit Dentaire Naqaa</h3>
-                    <p class="tagline">Brosse pliable + Boîte Miswak</p>
-                    <div class="price-tag">1800 DA</div>
-                    <ul class="mini-features">
-                        <li>Brosse à dents pliable naturelle</li>
-                        <li>Silice noire purifiante</li>
-                        <li>Huiles essentielles bio</li>
-                        <li>2 coloris : Vert & Beige</li>
-                    </ul>
-                    <div class="card-actions">
-                        <a href="boutique-detail.html" class="btn-detail">Détails</a>
-                        <a href="commande.html?product=kit" class="btn-order">Commander</a>
-                    </div>
+        <!-- FIL -->
+        <div class="product-card">
+            <span class="badge new">Nouveau</span>
+            <div class="card-image">
+                <img src="Fil.PNG" alt="Fil Dentaire Rechargeable Naqaa">
+            </div>
+            <div class="card-body">
+                <h3>Fil Dentaire</h3>
+                <p class="tagline">Hygiène interdentaire éco-responsable</p>
+                <div class="price-tag">400 DA</div>
+                <ul class="mini-features">
+                    <li>Rechargeable</li>
+                    <li>Éco-friendly</li>
+                    <li>Nettoyage efficace</li>
+                </ul>
+                <div class="card-actions">
+                    <a href="#" class="btn-detail">Détails</a>
+                    <a href="commande.html?product=fil" class="btn-order">Commander</a>
                 </div>
             </div>
+        </div>
 
-            <!-- Produit 2 : Fil Dentaire -->
-            <div class="product-card">
-                <span class="badge new">Nouveau</span>
-                <div class="card-image">
-                    <img src="Fil.PNG" alt="Fil Dentaire Rechargeable Naqaa">
-                </div>
-                <div class="card-body">
-                    <h3>Fil Dentaire Rechargeable</h3>
-                    <p class="tagline">Hygiène interdentaire éco-responsable</p>
-                    <div class="price-tag">400 DA</div>
-                    <ul class="mini-features">
-                        <li>Boîtier rechargeable réutilisable</li>
-                        <li>Fil haute résistance</li>
-                        <li>Réduit les déchets plastique</li>
-                        <li>Idéal pour l'interdentaire</li>
-                    </ul>
-                    <div class="card-actions">
-                        <a href="#" class="btn-detail" onclick="showProductModal('fil')">Détails</a>
-                        <a href="commande.html?product=fil" class="btn-order">Commander</a>
-                    </div>
+        <!-- SPRAY -->
+        <div class="product-card">
+            <span class="badge new">Nouveau</span>
+            <div class="card-image">
+                <img src="Huilles.jpeg" alt="Spray Buccal Naqaa">
+            </div>
+            <div class="card-body">
+                <h3>Spray Buccal</h3>
+                <p class="tagline">Fraîcheur instantanée aux huiles naturelles</p>
+                <div class="price-tag">500 DA</div>
+                <ul class="mini-features">
+                    <li>Menthe naturelle</li>
+                    <li>Sans alcool</li>
+                    <li>Haleine fraîche</li>
+                </ul>
+                <div class="card-actions">
+                    <a href="#" class="btn-detail">Détails</a>
+                    <a href="commande.html?product=spray" class="btn-order">Commander</a>
                 </div>
             </div>
+        </div>
 
-            <!-- Produit 3 : Spray Naqaa -->
-            <div class="product-card">
-                <span class="badge new">Nouveau</span>
-                <div class="card-image">
-                    <img src="Huilles.jpeg" alt="Spray Buccal Naqaa">
-                </div>
-                <div class="card-body">
-                    <h3>Spray Buccal Naqaa</h3>
-                    <p class="tagline">Fraîcheur instantanée aux huiles naturelles</p>
-                    <div class="price-tag">500 DA</div>
-                    <ul class="mini-features">
-                        <li>Huile de menthe & clou de girofle</li>
-                        <li>Antibactérien naturel</li>
-                        <li>Format pocket — partout avec vous</li>
-                        <li>Sans alcool, sans fluor</li>
-                    </ul>
-                    <div class="card-actions">
-                        <a href="#" class="btn-detail" onclick="showProductModal('spray')">Détails</a>
-                        <a href="commande.html?product=spray" class="btn-order">Commander</a>
-                    </div>
-                </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="contact">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Naqaa</h3>
+            <p>Naturally Clean</p>
+        </div>
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: Naqaa@annaba.dz</p>
+            <p>Tél: +213 07 88 31 27 83</p>
+        </div>
+        <div class="footer-section">
+            <h4>Suivez-nous</h4>
+            <div class="social-links">
+                <a href="https://www.instagram.com/naqaa.natural?igsh=b3JldDk3dGt3cW1y&utm_source=qr">Instagram</a>
             </div>
+        </div>
+    </div>
+    <p class="copyright">© 2026 Naqaa. Tous droits réservés.</p>
+</footer>
 
+<!-- CHAT BUTTON -->
+
+<button
+    type="button"
+    class="ai-assistant-btn"
+    onclick="toggleChat()"
+>
+    🌿
+</button>
+
+<!-- CHAT PANEL -->
+
+<div class="ai-chat-panel" id="chatPanel">
+
+    <div class="chat-header">
+        <div>
+            <h4>Conseillère Naqaa</h4>
+            <p>En ligne</p>
+        </div>
+        <button
+            type="button"
+            class="close-chat"
+            onclick="toggleChat()"
+        >
+            ✕
+        </button>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+        <div class="msg bot">
+            🌿 Bonjour ! Je suis la conseillère Naqaa.
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Naqaa</h3>
-                <p>Naturally Clean</p>
-            </div>
-            <div class="footer-section">
-                <h4>Contact</h4>
-                <p>Email: Naqaa@annaba.dz</p>
-                <p>Tél: +213 07 88 31 27 83</p>
-            </div>
-            <div class="footer-section">
-                <h4>Suivez-nous</h4>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/naqaa.natural?igsh=b3JldDk3dGt3cW1y&utm_source=qr">Instagram</a>
-                </div>
-            </div>
-        </div>
-        <p class="copyright">© 2026 Naqaa. Tous droits réservés.</p>
-    </footer>
-
-    <!-- AI Assistant Button -->
-    <button class="ai-assistant-btn" onclick="toggleChat()" title="Assistant Naqaa IA">
-        🌿
-        <span class="pulse"></span>
-    </button>
-
-    <!-- AI Chat Panel -->
-    <div class="ai-chat-panel" id="chatPanel">
-        <div class="chat-header">
-            <div class="avatar">🌿</div>
-            <div class="info">
-                <h4>Conseillère Naqaa</h4>
-                <p>Propulsée par l'IA • En ligne</p>
-            </div>
-            <button class="close-chat" onclick="toggleChat()">✕</button>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="msg bot">Bonjour ! 👋 Je suis votre conseillère beauté naturelle Naqaa. Je peux vous aider à choisir le produit parfait selon vos besoins.</div>
-        </div>
-        <div class="quick-replies" id="quickReplies">
-            <button class="quick-reply" onclick="sendQuick('Quel produit me recommandes-tu ?')">Recommandation</button>
-            <button class="quick-reply" onclick="sendQuick('Quelle est la différence entre les produits ?')">Comparer</button>
-            <button class="quick-reply" onclick="sendQuick('C\'est quoi le pack ?')">Le Pack</button>
-            <button class="quick-reply" onclick="sendQuick('Comment utiliser le kit dentaire ?')">Utilisation</button>
-        </div>
-        <div class="chat-input-row">
-            <input type="text" id="chatInput" placeholder="Posez votre question..." onkeydown="if(event.key==='Enter') sendMessage()">
-            <button onclick="sendMessage()">➤</button>
-        </div>
+    <div class="quick-replies" id="quickReplies">
+        <button type="button" class="quick-reply" onclick="sendQuick('prix')">Prix</button>
+        <button type="button" class="quick-reply" onclick="sendQuick('pack')">Pack</button>
+        <button type="button" class="quick-reply" onclick="sendQuick('livraison')">Livraison</button>
+        <button type="button" class="quick-reply" onclick="sendQuick('commander')">Commander</button>
     </div>
 
-    <script>
-        // ---- AI CHAT ----
-        const SYSTEM_PROMPT = `Tu es la conseillère beauté et santé de la marque Naqaa, une marque algérienne de soins bucco-dentaires naturels basée sur le Miswak.
-Tu parles en français, tu es chaleureuse, experte et naturelle.
+    <div class="chat-input-row">
+        <input
+            type="text"
+            id="chatInput"
+            placeholder="Posez votre question..."
+        >
+        <button type="button" onclick="sendMessage()">➤</button>
+    </div>
 
-Catalogue produits :
-1. Kit Dentaire Naqaa — 1800 DA : brosse pliable, silice noire, huiles essentielles (menthe, girofle, jojoba), 2 coloris (vert/beige). Bestseller.
-2. Fil Dentaire Rechargeable Naqaa — 400 DA : boîtier rechargeable réutilisable, éco-responsable, pour l'hygiène interdentaire.
-3. Spray Buccal Naqaa — 500 DA : huile de menthe & clou de girofle, antibactérien, format pocket, sans alcool ni fluor.
-4. Pack Complet Naqaa — 2500 DA : contient les 3 produits ci-dessus (économie de 200 DA), livraison prioritaire incluse.
+</div>
 
-Conseils de recommandation :
-- Pour un débutant ou cadeau : Kit Dentaire seul
-- Pour une hygiène complète : Pack Complet (meilleur rapport qualité/prix)
-- En complément : Fil Dentaire + Kit
-- Pour les déplacements : Spray Buccal
-- Pour une haleine fraîche en journée : Spray Buccal
+<!-- SCRIPT -->
 
-Livraison : Domicile 500 DA, Bureau 350 DA. Paiement à la livraison ou carte.
-Ne mentionne jamais de concurrents. Réponds toujours de façon courte et utile (max 3 phrases). Si on te demande de commander, dis que le bouton "Commander" est sur la page.`;
+<script>
 
-        let chatHistory = [];
-        let chatOpen = false;
+let chatOpen = false;
 
-        function toggleChat() {
-            chatOpen = !chatOpen;
-            document.getElementById('chatPanel').classList.toggle('open', chatOpen);
-            if (chatOpen) document.getElementById('chatInput').focus();
+const chatMessages = document.getElementById("chatMessages");
+const chatInput    = document.getElementById("chatInput");
+
+/* OPEN */
+
+function toggleChat(){
+    chatOpen = !chatOpen;
+    document.getElementById("chatPanel").classList.toggle("open", chatOpen);
+}
+
+/* QUICK */
+
+function sendQuick(text){
+    chatInput.value = text;
+    sendMessage();
+}
+
+/* SOUND */
+
+function playNotification(){
+    const audio = new Audio(
+        "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=notification-2-269292.mp3"
+    );
+    audio.volume = 0.4;
+    audio.play();
+}
+
+/* ADD MESSAGE */
+
+function appendMsg(text,type){
+    const div = document.createElement("div");
+    div.className = "msg " + type;
+    div.innerHTML = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    localStorage.setItem("naqaa_chat", chatMessages.innerHTML);
+}
+
+/* LOAD */
+
+window.onload = function(){
+    const savedChat = localStorage.getItem("naqaa_chat");
+    if(savedChat){
+        chatMessages.innerHTML = savedChat;
+    }
+    setTimeout(() => {
+        if(!chatOpen){
+            toggleChat();
+            appendMsg(
+                "🌿 Bonjour / مرحباً ! Besoin d'aide pour choisir votre produit Naqaa ?",
+                "bot"
+            );
+            playNotification();
         }
+    },3000);
+};
 
-        function sendQuick(text) {
-            document.getElementById('chatInput').value = text;
-            sendMessage();
-        }
+/* SEND MESSAGE */
 
-        async function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
-            if (!text) return;
+function sendMessage(){
 
-            input.value = '';
-            appendMsg(text, 'user');
-            chatHistory.push({ role: 'user', content: text });
+    const text = chatInput.value.trim();
+    if(!text) return;
 
-            // hide quick replies after first message
-            document.getElementById('quickReplies').style.display = 'none';
+    appendMsg(text,"user");
+    playNotification();
+    chatInput.value = "";
+    document.getElementById("quickReplies").style.display = "none";
 
-            const loadingEl = appendMsg('...', 'bot loading');
+    const userText = text.toLowerCase();
+    let botReply = "";
 
-            try {
-                const response = await fetch('https://api.anthropic.com/v1/messages', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        model: 'claude-sonnet-4-20250514',
-                        max_tokens: 1000,
-                        system: SYSTEM_PROMPT,
-                        messages: chatHistory
-                    })
-                });
+    /* HELLO */
+    if(
+        userText.includes("bonjour") ||
+        userText.includes("hello") ||
+        userText.includes("salam") ||
+        userText.includes("مرحبا")
+    ){
+        botReply = "🌿 Bonjour / مرحباً ! Comment puis-je vous aider ?";
+    }
 
-                const data = await response.json();
-                const reply = data.content?.[0]?.text || "Désolée, je n'ai pas pu répondre. Réessayez.";
+    /* PRIX */
+    else if(
+        userText.includes("prix") ||
+        userText.includes("السعر") ||
+        userText.includes("combien")
+    ){
+        botReply = "💰 <b>Nos prix :</b><br><br>🪥 Kit Dentaire : 1800 DA<br>🦷 Fil Dentaire : 400 DA<br>✨ Spray Buccal : 500 DA<br>🌿 Pack Complet : 2500 DA";
+    }
 
-                loadingEl.textContent = reply;
-                loadingEl.classList.remove('loading');
-                chatHistory.push({ role: 'assistant', content: reply });
+    /* KIT */
+    else if(
+        userText.includes("kit") ||
+        userText.includes("brosse")
+    ){
+        botReply = "🪥 <b>Kit Dentaire Naqaa</b><br>💰 1800 DA<br><br>✔ Brosse naturelle<br>✔ Huiles bio<br>✔ Disponible Vert & Beige";
+    }
 
-            } catch (err) {
-                loadingEl.textContent = "Connexion impossible. Vérifiez votre réseau.";
-                loadingEl.classList.remove('loading');
-            }
-        }
+    /* FIL */
+    else if(
+        userText.includes("fil")
+    ){
+        botReply = "🦷 <b>Fil Dentaire Rechargeable</b><br>💰 400 DA<br><br>✔ Réutilisable<br>✔ Éco-friendly<br>✔ Nettoyage efficace";
+    }
 
-        function appendMsg(text, type) {
-            const div = document.createElement('div');
-            div.className = 'msg ' + type;
-            div.textContent = text;
-            const msgs = document.getElementById('chatMessages');
-            msgs.appendChild(div);
-            msgs.scrollTop = msgs.scrollHeight;
-            return div;
-        }
+    /* SPRAY */
+    else if(
+        userText.includes("spray") ||
+        userText.includes("haleine")
+    ){
+        botReply = "✨ <b>Spray Buccal Naqaa</b><br>💰 500 DA<br><br>✔ Menthe naturelle<br>✔ Sans alcool<br>✔ Haleine fraîche";
+    }
 
-        // Product quick modals
-        function showProductModal(type) {
-            const info = {
-                fil: { name: 'Fil Dentaire Rechargeable', price: '400 DA', desc: 'Boîtier rechargeable réutilisable en plastique recyclé. Fil haute résistance pour un nettoyage interdentaire efficace. Contribue à réduire les déchets plastiques. Idéal en complément du Kit Dentaire Naqaa.' },
-                spray: { name: 'Spray Buccal Naqaa', price: '500 DA', desc: "Spray a base d'huile de menthe poivree et d'huile de clou de girofle. Action antibacterienne instantanee, haleine fraiche prolongee. Format mini 30ml pour sac ou poche. Sans alcool, sans fluor, sans conservateurs synthetiques." }
-            };
-            const p = info[type];
-            alert(`${p.name} — ${p.price}\n\n${p.desc}`);
-        }
-    </script>
+    /* PACK */
+    else if(
+        userText.includes("pack")
+    ){
+        botReply = "🌿 <b>Pack Complet Naqaa</b><br>💰 2500 DA<br><br>✔ Kit + Fil + Spray<br>🎁 Économie de 200 DA";
+    }
+
+    /* LIVRAISON */
+    else if(
+        userText.includes("livraison") ||
+        userText.includes("delivery")
+    ){
+        botReply = "🚚 Livraison disponible dans toute l'Algérie.<br><br>🏠 Domicile : 500 DA<br>📦 Bureau : 350 DA";
+    }
+
+    /* COMMANDE */
+    else if(
+        userText.includes("commander") ||
+        userText.includes("commande") ||
+        userText.includes("acheter") ||
+        userText.includes("طلب")
+    ){
+        botReply = `
+        🛒 <b>Commande Rapide</b><br><br>
+        <form action="commande.html" method="GET">
+            <input type="text" name="nom" placeholder="Votre nom" required>
+            <input type="text" name="telephone" placeholder="Téléphone" required>
+            <select name="product">
+                <option>Kit Dentaire</option>
+                <option>Fil Dentaire</option>
+                <option>Spray Buccal</option>
+                <option>Pack Complet</option>
+            </select>
+            <button type="submit">Commander 🌿</button>
+        </form>
+        `;
+    }
+
+    /* DEFAULT */
+    else{
+        botReply = "🌿 Je peux vous aider concernant :<br><br>🪥 Les produits<br>💰 Les prix<br>🚚 Livraison<br>🛒 Commandes";
+    }
+
+    setTimeout(() => {
+        appendMsg(botReply,"bot");
+        playNotification();
+    },500);
+
+}
+
+/* ENTER */
+
+chatInput.addEventListener("keydown",function(event){
+    if(event.key === "Enter"){
+        sendMessage();
+    }
+});
+
+</script>
+
 </body>
 </html>
